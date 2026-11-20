@@ -1,0 +1,7 @@
+import {Link} from 'react-router-dom'
+import {Heart,ShoppingBag,Star} from 'lucide-react'
+import {useShop} from '../context/ShopContext'
+export default function ProductCard({product}) {
+ const {addToCart,wishlist,toggleWishlist}=useShop(); const saved=wishlist.some(x=>x.id===product.id)
+ return <article className="product-card"><div className="product-image-wrap"><Link to={`/product/${product.id}`}><img src={product.image} alt={product.name}/></Link>{product.tag&&<span className="product-tag">{product.tag}</span>}<button className={`wishlist-btn ${saved?'saved':''}`} onClick={()=>toggleWishlist(product)} aria-label="Toggle wishlist"><Heart size={18} fill={saved?'currentColor':'none'}/></button><button className="quick-add" onClick={()=>addToCart(product)}><ShoppingBag size={16}/> Add to bag</button></div><div className="product-meta"><span>{product.category}</span><span className="rating"><Star size={13} fill="currentColor"/> {product.rating}</span></div><Link className="product-name" to={`/product/${product.id}`}>{product.name}</Link><div className="product-price">Rs. {product.price.toLocaleString('en-PK')} {product.oldPrice&&<del>Rs. {product.oldPrice.toLocaleString('en-PK')}</del>}</div></article>
+}
